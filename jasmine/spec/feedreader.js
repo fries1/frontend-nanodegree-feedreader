@@ -29,7 +29,7 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* A test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
@@ -42,7 +42,7 @@ $(function() {
          });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* A test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
@@ -55,12 +55,9 @@ $(function() {
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
     describe('The menu', function() {
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
+        /* A test that ensures the menu element is
+         * hidden by default.
          */
          it('is hidden by default', function() {
             // creates an array that holds all of body's classes
@@ -69,14 +66,10 @@ $(function() {
             expect(classes).toContain('menu-hidden');
          });
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
+         /* A test that ensures the menu changes
+          * visibility when the menu icon is clicked.
           */
-
           var menuIcon = $('.menu-icon-link');
-          var clicked = false;
           it('should change visibility when the menu icon is clicked', function(){
             // trigger an Icon click
             menuIcon.trigger('click');
@@ -92,13 +85,10 @@ $(function() {
 
     });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function() {
-        /* TODO: Write a test that ensures when the loadFeed
+        /* A test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
         // call the loadFeed function and make sure to wait till it is finsihed
@@ -112,41 +102,38 @@ $(function() {
             expect($('.feed').children().length).toBeGreaterThan(0);
             done();
         });
-    })
+    });
 
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New Feed Selection', function() {
-        /* TODO: Write a test that ensures when a new feed is loaded
+        /* A test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
          */
-         // to test if the content changes with new further calls to
-         // loadFeed(), the .header-title of two consecutive calls with
+
+         // To test if the content changes with new further calls to
+         // loadFeed(), the .header-title and .feed textContents of
+         // two consecutive calls with
          // different parameters are compared
-        var header1, header2;
+        var header1, header2, content1, content2;
         beforeEach(function(done) {
             // first call to loadFeed()
             loadFeed(1, function() {
                 header1 = $('.header-title')[0].textContent;
-                //console.log(header1);
-            });
-
-            // second call to loadFeed after 1s
-            setTimeout(function() {
-                loadFeed(2, function() {
+                content1 = $('.feed')[0].textContent;
+                //second call to loadFeed()
+                loadFeed(2, function(){
                     header2 = $('.header-title')[0].textContent;
-                    //console.log(header2);
+                    content2 = $('.feed')[0].textContent;
                     done();
                 });
-            }, 1000);
+            });
         });
 
         // after both calls are finished the header-titles are comapred
         it('should result in the content to change', function(done){
-
             expect(header1).not.toEqual(header2);
+            expect(content1).not.toEqual(content2);
             done();
         });
-    })
+    });
 }());
